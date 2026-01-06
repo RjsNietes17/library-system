@@ -48,95 +48,135 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Library Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f8;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background: #ffffff;
-            padding: 20px 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            width: 320px;
-        }
-        h2 {
-            margin-top: 0;
-            text-align: center;
-        }
-        .tabs {
-            display: flex;
-            margin-bottom: 15px;
-        }
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 8px;
-            cursor: pointer;
-            background: #e5e9f0;
-            border-radius: 4px 4px 0 0;
-            margin-right: 2px;
-            font-size: 14px;
-        }
-        .tab.active {
-            background: #4c6ef5;
-            color: #ffffff;
-            font-weight: bold;
-        }
-        form {
-            display: none;
-        }
-        form.active {
-            display: block;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 7px;
-            margin-top: 3px;
-            border: 1px solid #ccd0d5;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        button {
-            width: 100%;
-            padding: 8px;
-            margin-top: 15px;
-            border: none;
-            border-radius: 4px;
-            background: #4c6ef5;
-            color: #ffffff;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        button:hover {
-            background: #3b5bdb;
-        }
-        .message {
-            margin-top: 10px;
-            font-size: 13px;
-            color: #d6336c;
-            text-align: center;
-            min-height: 18px;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Library System Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* {
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #4c6ef5, #364fc7);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    background: #ffffff;
+    width: 360px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    text-align: center;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #343a40;
+}
+
+.tabs {
+    display: flex;
+    background: #f1f3f5;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #495057;
+    transition: 0.3s;
+}
+
+.tab.active {
+    background: #4c6ef5;
+    color: #fff;
+    font-weight: 500;
+}
+
+form {
+    display: none;
+}
+
+form.active {
+    display: block;
+}
+
+label {
+    font-size: 13px;
+    color: #495057;
+    margin-top: 12px;
+    display: block;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 6px;
+    border: 1px solid #ced4da;
+    font-size: 14px;
+    transition: border 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #4c6ef5;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background: #4c6ef5;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: #3b5bdb;
+}
+
+.message {
+    text-align: center;
+    font-size: 13px;
+    color: #e03131;
+    min-height: 18px;
+    margin-bottom: 10px;
+}
+</style>
 </head>
+
 <body>
 <div class="container">
-    <h2>Library System</h2>
+    <h2>📚 Library System</h2>
+
     <div class="tabs">
         <div class="tab active" id="loginTab">Login</div>
         <div class="tab" id="registerTab">Register</div>
@@ -148,40 +188,44 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <input type="hidden" name="action" value="login">
         <label>Username</label>
         <input type="text" name="username" required>
+
         <label>Password</label>
         <input type="password" name="password" required>
-        <button type="submit">Login</button>
+
+        <button type="submit">Sign In</button>
     </form>
 
     <form id="registerForm" method="post">
         <input type="hidden" name="action" value="register">
         <label>Username</label>
         <input type="text" name="username" required>
+
         <label>Password</label>
         <input type="password" name="password" required>
-        <button type="submit">Register</button>
+
+        <button type="submit">Create Account</button>
     </form>
 </div>
 
 <script>
-    const loginTab = document.getElementById("loginTab");
-    const registerTab = document.getElementById("registerTab");
-    const loginForm = document.getElementById("loginForm");
-    const registerForm = document.getElementById("registerForm");
+const loginTab = document.getElementById("loginTab");
+const registerTab = document.getElementById("registerTab");
+const loginForm = document.getElementById("loginForm");
+const registerForm = document.getElementById("registerForm");
 
-    loginTab.addEventListener("click", () => {
-        loginTab.classList.add("active");
-        registerTab.classList.remove("active");
-        loginForm.classList.add("active");
-        registerForm.classList.remove("active");
-    });
+loginTab.onclick = () => {
+    loginTab.classList.add("active");
+    registerTab.classList.remove("active");
+    loginForm.classList.add("active");
+    registerForm.classList.remove("active");
+};
 
-    registerTab.addEventListener("click", () => {
-        registerTab.classList.add("active");
-        loginTab.classList.remove("active");
-        registerForm.classList.add("active");
-        loginForm.classList.remove("active");
-    });
+registerTab.onclick = () => {
+    registerTab.classList.add("active");
+    loginTab.classList.remove("active");
+    registerForm.classList.add("active");
+    loginForm.classList.remove("active");
+};
 </script>
 </body>
 </html>
