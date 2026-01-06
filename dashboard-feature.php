@@ -41,99 +41,199 @@ if (isset($_GET["logout"])) {
     <meta charset="UTF-8">
     <title>Library Dashboard</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f2f4f8;
-            margin: 0;
-        }
-        .header {
-            background: #4c6ef5;
-            color: #ffffff;
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header .user {
-            font-size: 14px;
-        }
-        .header a {
-            color: #ffffff;
-            text-decoration: none;
-            margin-left: 10px;
-            font-size: 14px;
-        }
-        .container {
-            padding: 20px;
-        }
-        h2 {
-            margin-top: 0;
-        }
-        .search-box {
-            background: #ffffff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .search-box input[type="text"] {
-            flex: 1;
-            padding: 8px;
-            border-radius: 4px;
-            border: 1px solid #ccd0d5;
-            font-size: 14px;
-        }
-        .search-box button {
-            padding: 8px 14px;
-            border-radius: 4px;
-            border: none;
-            background: #4c6ef5;
-            color: #ffffff;
-            font-size: 14px;
-            cursor: pointer;
-        }
-        .search-box button:hover {
-            background: #3b5bdb;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: #ffffff;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-            font-size: 13px;
-        }
-        th, td {
-            padding: 8px 10px;
-            border-bottom: 1px solid #e5e9f0;
-            text-align: left;
-        }
-        th {
-            background: #f1f3f5;
-        }
-        tr:hover {
-            background: #f8f9fa;
-        }
-        .no-results {
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-        .highlight {
-            background: #fff3bf;
-        }
+    :root {
+        --bg: #f2f4f8;
+        --card: #ffffff;
+        --text: #1f2937;
+        --muted: #555;
+        --primary: #4c6ef5;
+        --primary-hover: #3b5bdb;
+        --table-head: #f1f3f5;
+        --row-hover: #f8f9fa;
+        --highlight: #fff3bf;
+    }
+
+    body.dark {
+        --bg: #0f172a;
+        --card: #1e293b;
+        --text: #e5e7eb;
+        --muted: #9ca3af;
+        --primary: #6366f1;
+        --primary-hover: #4f46e5;
+        --table-head: #334155;
+        --row-hover: #1f2937;
+        --highlight: #854d0e;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        margin: 0;
+        transition: background 0.3s, color 0.3s;
+    }
+
+    .header {
+        background: var(--primary);
+        color: #ffffff;
+        padding: 10px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .header a {
+        color: #ffffff;
+        text-decoration: none;
+        margin-left: 10px;
+        font-size: 14px;
+    }
+
+    .theme-btn {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+    .search-box,
+    table {
+        background: var(--card);
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .search-box {
+        padding: 15px;
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    .search-box input {
+        flex: 1;
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    .search-box button {
+        padding: 8px 14px;
+        border-radius: 4px;
+        border: none;
+        background: var(--primary);
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .search-box button:hover {
+        background: var(--primary-hover);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 13px;
+    }
+
+    th, td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #334155;
+    }
+
+    th {
+        background: var(--table-head);
+    }
+
+    tr:hover {
+        background: var(--row-hover);
+    }
+
+    .no-results {
+        color: var(--muted);
+    }
+
+    .highlight {
+        background: var(--highlight);
+    }
+
+    .theme-switch {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #fff;
+    }
+
+    .switch {
+        position: relative;
+        width: 48px;
+        height: 22px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #cbd5f5;
+        border-radius: 999px;
+        transition: 0.3s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 18px;
+        width: 18px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        border-radius: 50%;
+        transition: 0.3s;
+    }
+
+    .switch input:checked + .slider {
+        background-color: #1e293b;
+    }
+
+    .switch input:checked + .slider:before {
+        transform: translateX(26px);
+    }
+
     </style>
+
 </head>
 <body>
 <div class="header">
     <div>Library Dashboard</div>
-    <div class="user">
-        Logged in as: <?php echo htmlspecialchars($_SESSION["username"]); ?>
-        <a href="?logout=1">Logout</a>
+    <div class="user theme-switch">
+        <span>Theme</span>
+        <span>Light</span>
+
+        <label class="switch">
+            <input type="checkbox" id="themeToggle">
+            <span class="slider"></span>
+        </label>
+
+        <span>Dark</span>
+
+        <span style="margin-left:12px;">
+            <?php echo htmlspecialchars($_SESSION["username"]); ?>
+            <a href="?logout=1">Logout</a>
+        </span>
     </div>
 </div>
 <div class="container">
@@ -206,5 +306,30 @@ if (isset($_GET["logout"])) {
         });
     })();
 </script>
+<script>
+const toggle = document.getElementById("themeToggle");
+
+// Load saved theme
+(function () {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+        toggle.checked = true;
+    }
+})();
+
+// Toggle event
+toggle.addEventListener("change", function () {
+    if (this.checked) {
+        document.body.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+    } else {
+        document.body.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+    }
+});
+</script>
+
+
 </body>
 </html>
